@@ -13,5 +13,16 @@ require'lspconfig'.jdtls.setup {capabilities = capabilities}
 require'lspconfig'.texlab.setup {capabilities = capabilities}
 
 -- Telescope init
-require("telescope").setup()
 require('telescope').load_extension('fzy_native')
+require('telescope').setup {
+    defaults = {
+        mappings = {
+            n = {
+        	    ['<c-d>'] = require('telescope.actions').delete_buffer,
+            },
+            i = {
+                ['<c-d>'] = require('telescope.actions').delete_buffer,
+            }
+        },
+    },
+}
