@@ -7,9 +7,23 @@ set expandtab       " use spaces instead of tabs
 set ignorecase      " ignore case when tab-completing commands
 set spelllang=en_us " set spell check language to U.S. English
 set spell           " enable spell check
-"set nowrap          " don't automatically wrap on multiline comments
+set foldmethod=expr " syntax based folding
+set foldexpr=nvim_treesitter#foldexpr()
+set foldminlines=1
+
+if &foldlevel == 0
+    set foldlevel=2
+endif
 
 command SpellHelp for item in ['Bad','Cap','Local','Rare']| exe "hi Spell".item| endfor
 
 " stop :wq from writing and quitting, forcing :x instead 
 cabbrev wq echo "use :x instead"
+
+autocmd Filetype java   let b:dispatch = "java %"
+autocmd Filetype python let b:dispatch = "python %"
+autocmd Filetype c      let b:dispatch = "gcc % -o dispatch.out && ./dispatch.out && rm -f ./dispatch.out"
+autocmd Filetype cpp    let b:dispatch = "g++ % -o dispatch.out && ./dispatch.out && rm -f ./dispatch.out"
+autocmd Filetype rust   let b:dispatch = "cargo run"
+
+autocmd BufLeave * if empty(expand('<abuf>')) | bw | endif

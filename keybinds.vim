@@ -1,6 +1,3 @@
-" map 'w' in command mode to write with permissions
-cnoremap <leader>w SudaWrite<cr>
-
 " map Ctrl+n to open new tab
 "nnoremap <c-n> <cmd>tabnew<cr>
 
@@ -26,6 +23,7 @@ noremap <leader>/ <cmd>silent noh<cr>
 " remap Ctrl+Backspace to delete a word
 "nnoremap <c-h> i<c-w><esc>l <-- basically never used
 inoremap <c-h> <c-w>
+cnoremap <c-h> <c-w>
 
 " remap Ctrl+z in insert mode to undo
 inoremap <c-z> <c-u>
@@ -49,8 +47,6 @@ vnoremap <leader>a <c-w>
 " map 'r' to source vimrc
 nnoremap <leader>r <cmd>source $MYVIMRC<cr><cmd>echo "Loaded init.vim"<cr>
 
-" map 'd' to edit vimrc
-nnoremap <leader>j <cmd>silent tabnew<cr><cmd>silent edit $MYVIMRC<cr><cmd>silent tcd %:h<cr>
 
 " map 'm' to move the text selected by markers
 "nnoremap <leader>m mA'1"ad'2'A"ap
@@ -59,7 +55,8 @@ nnoremap <leader>j <cmd>silent tabnew<cr><cmd>silent edit $MYVIMRC<cr><cmd>silen
 nnoremap <leader>b <cmd>Telescope buffers<cr>
 
 " map 't' to fuzzy find tags (fzf)
-nnoremap <leader>t <cmd>silent exec "!ctags ."<cr><cmd>Telescope tags<cr>
+"nnoremap <leader>t <cmd>silent exec "!ctags ."<cr><cmd>Telescope tags<cr>
+nnoremap <leader>t <cmd>if !exists("GutentagsUpdate")<cr>silent exec "!ctags ."<cr>endif<cr><cmd>Telescope tags<cr>
 
 " map 'f' to fuzzy find files
 nnoremap <leader>f <cmd>Telescope find_files<cr>
@@ -75,9 +72,9 @@ nnoremap <leader>c <cmd>edit %:h<cr>
 nnoremap <leader>v mA<cmd>if isdirectory(bufname("%"))<cr>tcd %<cr>else<cr>tcd %:h<cr>endif<cr><cr>`A
 
 " map 'g' to insert a newline above / below the cursor
-nnoremap <leader>G               mAO<space><esc>d^x`A
-nnoremap <leader>g               mAo<space><esc>d^x`A
-inoremap <c-g>   <space><bs><esc>mAo<space><esc>d^x`Aa
+nnoremap <leader>G             mAO<space><esc>d^x`A
+nnoremap <leader>g             mAo<space><esc>d^x`A
+inoremap <c-g> <space><bs><esc>mAo<space><esc>d^x`Aa
 
 " map 'i' to enter / leave conceal mode
 "noremap <leader>i <cmd>set conceallevel=2<cr><cmd>set concealcursor=ni<cr>
@@ -89,8 +86,10 @@ inoremap <c-g>   <space><bs><esc>mAo<space><esc>d^x`Aa
 nnoremap ' `
 nnoremap ` '
 
-" map 'h' to open vimtex Table of Contents
-nnoremap <leader>h <cmd>VimtexTocOpen<cr>
+" map 'h' to highlight the selected text
+"vnoremap <leader>hr :<c-f>0Di silent HSRmHighlight<cr>
+"vnoremap <leader>hh :<c-f>0Di silent HSHighlight 10<cr>
+"vnoremap <leader>hf :<c-f>0D<c-c>silent HSHighlight<space>
 
 " remap 'q' to play the last macro, and leader+q to perform the 'q' functions
 nnoremap q @@
@@ -106,19 +105,30 @@ inoremap <c-up>     <esc><c-w>ki
 inoremap <c-s> <esc>hxpa
 noremap <leader>s hxp
 
+" map space to toggle fold
+noremap <space> za
+
+" map Alt+move to change tab
+noremap <M-h> gT
+noremap <M-l> gt
+inoremap <M-h> <esc>gTa
+inoremap <M-l> <esc>gta
+
 " map ; to comment the current line
-autocmd BufRead,BufNewFile *.cpp,*.c,*.rs,*.js,*.java   nnoremap <leader>; mB^i//<esc>`B
-autocmd BufRead,BufNewFile *.py,*.sh,*.bash             nnoremap <leader>; mB^i#<esc>`B
-autocmd BufRead,BufNewFile *.vim                        nnoremap <leader>; mB^i"<esc>`B
-autocmd BufRead,BufNewFile *.tex                        nnoremap <leader>; mB^i%<esc>`B
-autocmd BufRead,BufNewFile *.s,*.asm                    nnoremap <leader>; mB^i;<esc>`B
+autocmd FileType cpp,c,rust,javascript,java silent nnoremap <buffer> <leader>; mBI//<esc>`B
+autocmd FileType python,sh,bash             silent nnoremap <buffer> <leader>; mBI#<esc>`B
+autocmd FileType vim                        silent nnoremap <buffer> <leader>; mBI"<esc>`B
+autocmd FileType tex                        silent nnoremap <buffer> <leader>; mBI%<esc>`B
+autocmd FileType s,asm                      silent nnoremap <buffer> <leader>; mBI;<esc>`B
+autocmd FileType lua                        silent nnoremap <buffer> <leader>; mBI--<esc>`B
 
 " map , to uncomment the current line
-autocmd BufRead,BufNewFile *.cpp,*.c,*.rs,*.js,*.java   nnoremap <leader>. mB<cmd>s/^\(\s*\)\(\/\/\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
-autocmd BufRead,BufNewFile *.py,*.sh,*.bash             nnoremap <leader>. mB<cmd>s/^\(\s*\)\(#\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
-autocmd BufRead,BufNewFile *.vim                        nnoremap <leader>. mB<cmd>s/^\(\s*\)\("\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
-autocmd BufRead,BufNewFile *.tex                        nnoremap <leader>. mB<cmd>s/^\(\s*\)\(%\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
-autocmd BufRead,BufNewFile *.s,*.asm                    nnoremap <leader>. mB<cmd>s/^\(\s*\)\(;\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
+autocmd FileType cpp,c,rust,javascript,java silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\(\/\/\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
+autocmd FileType python,sh,bash             silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\(#\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
+autocmd FileType vim                        silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\("\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
+autocmd FileType tex                        silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\(%\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
+autocmd FileType s,asm                      silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\(;\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
+autocmd FileType lua                        silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\(--\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
 " - mA sets the mark 'A' (unlikely to be used because it is a capital letter) to
 " remember the cursor position
 " - <cmd>s does search/replace on the current line
@@ -130,6 +140,12 @@ autocmd BufRead,BufNewFile *.s,*.asm                    nnoremap <leader>. mB<cm
 " - <cmd>echo<cr> clears the command prompt
 " - `Aj replaces the cursor, then moves down a line
 
-command SpellUpdate mkspell! /home/joe/.config/nvim/spell/en.utf-8.add
-command SpellEdit   silent exec "tabnew | silent edit /home/joe/.config/nvim/spell/en.utf-8.add | tcd %:h"
-command TagGenerate silent !ctags .
+command SpellUpdate    mkspell! /home/joe/.config/nvim/spell/en.utf-8.add
+command SpellEdit      silent exec "tabnew | edit /home/joe/.config/nvim/spell/en.utf-8.add | tcd %:h"
+command TagGenerate    silent !ctags .
+command MRun           Make! run
+command MMake          Make
+command DDispatch      Dispatch
+command DDispatchAsync Dispatch!
+command VViEdit        silent tabnew | silent edit $MYVIMRC | silent tcd %:h
+command GGrep          !grep --exclude-from=/home/joe/.grepignore --exclude-dir={build,.git} -rin <args>

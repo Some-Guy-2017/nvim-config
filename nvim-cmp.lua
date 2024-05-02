@@ -1,5 +1,7 @@
 local cmp = require('cmp')
+
 local luasnip = require('luasnip')
+--luasnip.snippets = require('luasnip-snippets').load_snippets() -- load snippets from LuaSnip-snippets
 
 cmp.setup({
     snippet = {
@@ -37,12 +39,21 @@ cmp.setup({
             end
         end, { 'i', 's' }),
     }),
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-    }, {
-        { name = 'buffer' },
-    })
+    sources = cmp.config.sources(
+        {
+            { name = 'nvim_lsp' },
+            { name = 'luasnip' },
+            {
+                name = 'tags',
+                option = {
+                    complete_defer = 0, -- no delay after user input
+                    max_items = 10,
+                    keyword_length = 2,
+                }
+            },
+            { name = 'buffer' },
+        }
+    )
 })
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
@@ -57,9 +68,14 @@ cmp.setup.cmdline({ '/', '?' }, {
 cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-        { name = 'path' }
-    }, {
-        { name = 'cmdline' }
+            { name = 'path', },
+            { name = 'bash', },
+            {
+                name = 'cmdline',
+                option = {
+                    ignore_cmds = { 'Man', '!' }
+                }
+            },
     }),
     matching = { disallow_symbol_nonprefix_matching = false }
 })
