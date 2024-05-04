@@ -62,24 +62,24 @@ endfunction
 function _HighlightPseuocode()
     let b:matches = get(b:, "matches", [])
     
-    call MatchAdd("Keyword", _Token("[A-Z]+"))
+    call _MatchAdd("Keyword", _Token("[A-Z]+"))
     
-    call MatchAdd("Function", _TokenBehind("(START|CALL)") . _Token(g:any_token))
-    call MatchAdd("Type", _TokenBehind("CLASS") . _Token(g:any_token))
-    call MatchAdd("Number", _Token("[0-9]+"))
+    call _MatchAdd("Function", _TokenBehind("(START|CALL)") . _Token(g:any_token))
+    call _MatchAdd("Type", _TokenBehind("CLASS") . _Token(g:any_token))
+    call _MatchAdd("Number", _Token("[0-9]+"))
     
-    call MatchAdd("Operator", _Operator("(SET|APPEND)", "to"))
-    call MatchAdd("Operator", _Operator("LET", "be"))
-    call MatchAdd("Operator", _Operator("CALL", "with"))
-    call MatchAdd("Operator", _Operator("FOR", "in"))
-    call MatchAdd("Operator", _Operator("REMOVE", "from"))
-    call MatchAdd("Operator", _Operator("IF", "is"))
-    call MatchAdd("Operator", _TokenBehind(g:any_token) . "at ")
+    call _MatchAdd("Operator", _Operator("(SET|APPEND)", "to"))
+    call _MatchAdd("Operator", _Operator("LET", "be"))
+    call _MatchAdd("Operator", _Operator("CALL", "with"))
+    call _MatchAdd("Operator", _Operator("FOR", "in"))
+    call _MatchAdd("Operator", _Operator("REMOVE", "from"))
+    call _MatchAdd("Operator", _Operator("IF", "is"))
+    call _MatchAdd("Operator", _TokenBehind(g:any_token) . "at ")
     
-    call MatchAdd("String", _Token("\".*\""))
+    call _MatchAdd("String", _Token("\".*\""))
 endfunction
 
-function MatchAdd(group, pattern)
+function _MatchAdd(group, pattern)
     let id = matchadd(a:group, "\\v" . a:pattern, -1)
     if id != -1
         call add(b:matches, id)
