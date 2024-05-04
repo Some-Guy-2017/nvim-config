@@ -120,7 +120,7 @@ ls.add_snippets("java", {
         insert_node(1, "type"),
         text_node("> "),
         insert_node(2, "list"),
-        text_node(" = new ArrayList<>();"),
+        insert_node(3, " = new ArrayList<>();"),
         insert_node(0),
     }),
 })

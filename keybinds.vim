@@ -1,3 +1,5 @@
+" map ',' to perform the actual comma function
+noremap <leader>, ,
 " map Ctrl+n to open new tab
 "nnoremap <c-n> <cmd>tabnew<cr>
 
@@ -18,7 +20,8 @@ nnoremap "+<leader>O mAO<space><bs><esc>"+p`A
 nnoremap "+<leader>o mAo<space><bs><esc>"+p`A
 
 " map '/' to clear search result highlighting
-noremap <leader>/ <cmd>silent noh<cr>
+let b:highlighting = v:false
+noremap <leader>/ <cmd>let b:highlighting = v:false<cr><cmd>silent noh<cr>
 
 " remap Ctrl+Backspace to delete a word
 "nnoremap <c-h> i<c-w><esc>l <-- basically never used
@@ -36,6 +39,11 @@ noremap <leader>Z mAz-10j`A
 noremap n nzz
 noremap N Nzz
 
+"noremap <c-m> <esc>nve<c-g>
+"inoremap <c-m> <esc>nve<c-g>
+"noremap <c-l> <esc>NNve<c-g>
+"inoremap <c-l> <esc>Nve<c-g>
+
 " map writing in insert & normal mode
 nnoremap <leader>w <cmd>w<cr>
 inoremap <c-w> <esc><cmd>w<cr>a
@@ -45,21 +53,17 @@ nnoremap <leader>a <c-w>
 vnoremap <leader>a <c-w>
 
 " map 'r' to source vimrc
-nnoremap <leader>r <cmd>source $MYVIMRC<cr><cmd>echo "Loaded init.vim"<cr>
+nnoremap <leader>r <cmd>source $MYVIMRC<cr>
 
 
 " map 'm' to move the text selected by markers
 "nnoremap <leader>m mA'1"ad'2'A"ap
 
-" map 'b' to fuzzy find buffers (fzf)
+" Telescope
 nnoremap <leader>b <cmd>Telescope buffers<cr>
-
-" map 't' to fuzzy find tags (fzf)
-"nnoremap <leader>t <cmd>silent exec "!ctags ."<cr><cmd>Telescope tags<cr>
 nnoremap <leader>t <cmd>if !exists("GutentagsUpdate")<cr>silent exec "!ctags ."<cr>endif<cr><cmd>Telescope tags<cr>
-
-" map 'f' to fuzzy find files
 nnoremap <leader>f <cmd>Telescope find_files<cr>
+nnoremap <leader>h <cmd>Telescope highlights<cr>
 
 " map 'n' and 'p' to change buffers
 "nnoremap <leader>r <cmd>bnext<cr>
@@ -86,11 +90,6 @@ inoremap <c-g> <space><bs><esc>mAo<space><esc>d^x`Aa
 nnoremap ' `
 nnoremap ` '
 
-" map 'h' to highlight the selected text
-"vnoremap <leader>hr :<c-f>0Di silent HSRmHighlight<cr>
-"vnoremap <leader>hh :<c-f>0Di silent HSHighlight 10<cr>
-"vnoremap <leader>hf :<c-f>0D<c-c>silent HSHighlight<space>
-
 " remap 'q' to play the last macro, and leader+q to perform the 'q' functions
 nnoremap q @@
 nnoremap <leader>q q
@@ -109,10 +108,19 @@ noremap <leader>s hxp
 noremap <space> za
 
 " map Alt+move to change tab
-noremap <M-h> gT
-noremap <M-l> gt
+nnoremap <M-h> gT
+nnoremap <M-l> gt
+vnoremap <M-h> gTv
+vnoremap <M-l> gtv
 inoremap <M-h> <esc>gTa
 inoremap <M-l> <esc>gta
+
+
+" lsp bindings
+nnoremap <leader>x <cmd>lua vim.lsp.buf.hover()<cr>
+nnoremap <leader>d <cmd>lua vim.lsp.buf.references()<cr>
+
+snoremap <bs> _<bs>
 
 " map ; to comment the current line
 autocmd FileType cpp,c,rust,javascript,java silent nnoremap <buffer> <leader>; mBI//<esc>`B
@@ -149,3 +157,5 @@ command DDispatch      Dispatch
 command DDispatchAsync Dispatch!
 command VViEdit        silent tabnew | silent edit $MYVIMRC | silent tcd %:h
 command GGrep          !grep --exclude-from=/home/joe/.grepignore --exclude-dir={build,.git} -rin <args>
+command Tanew          silent tabnew
+command Format         silent lua vim.lsp.buf.format()

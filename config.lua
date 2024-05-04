@@ -1,17 +1,5 @@
 require("nvim-autopairs").setup {}
 
--- nvim-lint config
---[[
-require("lint").linters_by_ft = {
-  markdown = {"vale"},
-}
-vim.api.nvim_create_autocmd({"BufWritePost"}, {
-    callback = function()
-        require("lint").try_lint()
-    end
-})
-]]
-
 -- icon-picker config
 require("icon-picker").setup {disable_legacy_commands = true}
 local opts = { noremap = true, silent = true }
@@ -20,9 +8,30 @@ vim.keymap.set("i", "<C-e>", "<cmd>IconPickerInsert<cr>", opts)
 
 -- LSP config
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
---require'lspconfig'.tsserver.setup {capabilities = capabilities}
---require'lspconfig'.jdtls.setup {capabilities = capabilities}
---require'lspconfig'.texlab.setup {capabilities = capabilities}
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
+capabilities.publishDiagnostics = false
+require('lspconfig').tsserver.setup {capabilities = capabilities}
+require('lspconfig').jdtls.setup {
+    capabilities = capabilities,
+    handlers = {
+        ["textDocument/publishDiagnostics"] = function() end,
+    },
+}
+require('lspconfig').texlab.setup {capabilities = capabilities}
+
+-- ufo config
+vim.o.foldcolumn = '1' -- display one fold column, '0' disables
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+
+vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+
+require('ufo').setup()
 
 -- telescope config
 function delete_word()
@@ -49,30 +58,11 @@ require('telescope').setup {
     },
 }
 
--- HighStr config
---[[
-local high_str = require("high-str")
-high_str.setup({
-    verbosity = 0, -- (verbosity > 0) enables verbose output
-    saving_path = "/home/joe/.config/nvim/highlights/",
-    highlight_colors = {
-        -- "smart" means the foreground color will be changed to get better contrast against background
-        -- color_id = {"bg_hex_code",<"fg_hex_code"/"smart">}
-        color_0  = {"#0c0d0e", "smart"}, -- Cosmic charcoal
-        color_1  = {"#e5c07b", "smart"}, -- Pastel yellow
-        color_2  = {"#7FFFD4", "smart"}, -- Aqua menthe
-        color_3  = {"#8A2BE2", "smart"}, -- Proton purple
-        color_4  = {"#FF4500", "smart"}, -- Orange red
-        color_5  = {"#008000", "smart"}, -- Office green
-        color_6  = {"#0000FF", "smart"}, -- Just blue
-        color_7  = {"#FFC0CB", "smart"}, -- Blush pink
-        color_8  = {"#FFF9E3", "smart"}, -- Cosmic latte
-        color_9  = {"#7d5c34", "smart"}, -- Fallow brown
-        color_10 = {"#8ad2e3", "smart"}, -- Default highlight color
-        color_11 = {"#edd28a", "smart"},
-    }
-})
---]]
+-- colorizer setup
+-- https://github.com/norcalli/nvim-colorizer.lua#customization
+--require('colorizer').setup()
+
+
 
 --[[
 vim.api.nvim_create_autocmd({"BufLeave"}, {
@@ -107,8 +97,3 @@ vim.keymap.set('n', "zG", function()
 
 end, {silent = false})
 ]]
-
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-    callback = function(env)
-    end
-})

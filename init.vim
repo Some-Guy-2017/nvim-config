@@ -11,10 +11,10 @@ call plug#begin()
     Plug 'windwp/nvim-autopairs'        " auto pair (brackets, quotes, etc.)
     Plug 'nvim-lua/plenary.nvim'        " used by telescope
     Plug 'ludovicchabant/vim-gutentags' " tag manager
-    "Plug 'Pocco81/HighStr.nvim'        " highlighting text plugin
     Plug 'tpope/vim-abolish'            " manage word variants
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}   
     Plug 'tpope/vim-dispatch'           " async commands
+    "Plug 'norcalli/nvim-colorizer.lua'  " color highlights
 
     " markdown preview
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
@@ -23,7 +23,6 @@ call plug#begin()
     Plug 'nvim-telescope/telescope-fzy-native.nvim'          " compiled sorter for faster performance
     Plug 'ziontee113/icon-picker.nvim'                       " icon picker
     Plug 'stevearc/dressing.nvim'                            " nvim ui implementations
-    "Plug 'mfussenegger/nvim-lint'  " linter with LSP support
 
     " color schemes
     Plug 'Shatur/neovim-ayu'
@@ -43,6 +42,9 @@ call plug#begin()
     Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'}
     Plug 'saadparwaiz1/cmp_luasnip'     " use luasnip w/ nvim-cmp
     Plug 'rafamadriz/friendly-snippets' " snippet collection
+    
+    Plug 'kevinhwang91/nvim-ufo'      " pretty folds
+    Plug 'kevinhwang91/promise-async' " required by ufo
 
 call plug#end()
 
@@ -54,6 +56,7 @@ colorscheme gruvbox
 let g:mapleader = ","
 
 source /home/joe/.config/nvim/keybinds.vim
+source /home/joe/.config/nvim/keybinds.lua
 source /home/joe/.config/nvim/config.lua
 source /home/joe/.config/nvim/config.vim
 source /home/joe/.config/nvim/nvim-cmp.lua
