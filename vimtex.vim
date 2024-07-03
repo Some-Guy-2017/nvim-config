@@ -11,6 +11,9 @@ let g:vimtex_indent_on_ampersands = 0
 set conceallevel=0
 set concealcursor&
 let g:tex_conceal = 'abdmgs' " conceal accents, bold & italic, delimiters, math symbols, Greek, and superscripts / subscripts
+let g:vimtex_compiler_latexmk = {
+    \ 'out_dir' : './build/',
+\}
 
 "set conceallevel=2
 "set concealcursor=n " conceal lines in normal mode

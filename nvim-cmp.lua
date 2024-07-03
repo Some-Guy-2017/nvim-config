@@ -1,7 +1,6 @@
 local cmp = require('cmp')
 
 local luasnip = require('luasnip')
---luasnip.snippets = require('luasnip-snippets').load_snippets() -- load snippets from LuaSnip-snippets
 
 cmp.setup({
     snippet = {
@@ -15,12 +14,12 @@ cmp.setup({
         -- documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
-        ['<C-c>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({
-            select = true,                          -- accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<c-c>'] = cmp.mapping.abort(),
+        ['<m-y>'] = cmp.mapping.confirm({
+            select = true, -- accept currently selected item
             behavior = cmp.ConfirmBehavior.Replace, -- replace the text, don't leave it (versus ConfirmBehavior.Insert)
-        }), 
-        ['<Tab>'] = cmp.mapping(function(fallback)
+        }),
+        ['<tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
             --elseif luasnip.expand_or_jumpable() then
@@ -29,7 +28,7 @@ cmp.setup({
                 fallback()
             end
         end, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
+        ['<s-tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
             --elseif luasnip.jumpable(-1) then
@@ -51,6 +50,7 @@ cmp.setup({
                     keyword_length = 2,
                 }
             },
+        }, {
             { name = 'buffer' },
         }
     )

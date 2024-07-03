@@ -19,7 +19,6 @@ require('nvim-treesitter.configs').setup {
     highlight = {
         enable = true,
 
-        -- disable for latex (vimtex) and java (jdtls)
         disable = { "latex", "java" },
         
         --[[

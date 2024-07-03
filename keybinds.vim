@@ -1,161 +1,174 @@
 " map ',' to perform the actual comma function
-noremap <leader>, ,
-" map Ctrl+n to open new tab
-"nnoremap <c-n> <cmd>tabnew<cr>
+nnoremap <leader>, ,
+xnoremap <leader>, ,
+
+" map Alt+t to open new tab
+nnoremap <m-t> <cmd>tabnew<cr><cmd>Telescope find_files<cr>
 
 " map 'y' to yank to system clipboard
 nnoremap <leader>y "+y
-vnoremap <leader>y "+y
+xnoremap <leader>y "+y
 
 " map 'p' to paste from the system clipboard
 nnoremap <leader>p "+p
-vnoremap <leader>p "+p
+xnoremap <leader>p "+p
 nnoremap <leader>P "+P
-vnoremap <leader>P "+P
+xnoremap <leader>P "+P
 
 " map 'o' to paste onto next / previous line
-nnoremap <leader>O mAO<space><bs><esc>p`A
-nnoremap <leader>o mAo<space><bs><esc>p`A
-nnoremap "+<leader>O mAO<space><bs><esc>"+p`A
-nnoremap "+<leader>o mAo<space><bs><esc>"+p`A
+nnoremap <leader>op mAO<space><bs><esc>p`A
+nnoremap <leader>on mAo<space><bs><esc>p`A
+nnoremap <leader>oP mAO<space><bs><esc>"+p`A
+nnoremap <leader>oN mAo<space><bs><esc>"+p`A
 
 " map '/' to clear search result highlighting
 let b:highlighting = v:false
-noremap <leader>/ <cmd>let b:highlighting = v:false<cr><cmd>silent noh<cr>
+nnoremap <leader>/ <cmd>let b:highlighting = v:false<cr><cmd>silent noh<cr>
+xnoremap <leader>/ <cmd>let b:highlighting = v:false<cr><cmd>silent noh<cr>
 
 " remap Ctrl+Backspace to delete a word
 "nnoremap <c-h> i<c-w><esc>l <-- basically never used
 inoremap <c-h> <c-w>
 cnoremap <c-h> <c-w>
 
-" remap Ctrl+z in insert mode to undo
-inoremap <c-z> <c-u>
-
 " map 'z' to place the cursor at a comfortable position
-noremap <leader>z mAz<cr>10k`A
-noremap <leader>Z mAz-10j`A
+nnoremap <leader>z mAz<cr>10k`A
+nnoremap <leader>Z mAz-10j`A
+xnoremap <leader>z mAz<cr>10k`A
+xnoremap <leader>Z mAz-10j`A
 
 " remap finding the next character to also center cursor
-noremap n nzz
-noremap N Nzz
-
-"noremap <c-m> <esc>nve<c-g>
-"inoremap <c-m> <esc>nve<c-g>
-"noremap <c-l> <esc>NNve<c-g>
-"inoremap <c-l> <esc>Nve<c-g>
+nnoremap n nzz
+nnoremap N Nzz
+xnoremap n nzz
+xnoremap N Nzz
 
 " map writing in insert & normal mode
 nnoremap <leader>w <cmd>w<cr>
-inoremap <c-w> <esc><cmd>w<cr>a
-
-" map 'a' to Ctrl+w for window commands
-nnoremap <leader>a <c-w>
-vnoremap <leader>a <c-w>
 
 " map 'r' to source vimrc
 nnoremap <leader>r <cmd>source $MYVIMRC<cr>
 
-
-" map 'm' to move the text selected by markers
-"nnoremap <leader>m mA'1"ad'2'A"ap
-
 " Telescope
-nnoremap <leader>b <cmd>Telescope buffers<cr>
-nnoremap <leader>t <cmd>if !exists("GutentagsUpdate")<cr>silent exec "!ctags ."<cr>endif<cr><cmd>Telescope tags<cr>
+nnoremap <leader>b <cmd>BfClean<cr><cmd>Telescope buffers<cr>
+nnoremap <leader>t <cmd>Telescope tags<cr>
 nnoremap <leader>f <cmd>Telescope find_files<cr>
 nnoremap <leader>h <cmd>Telescope highlights<cr>
 
-" map 'n' and 'p' to change buffers
-"nnoremap <leader>r <cmd>bnext<cr>
-"nnoremap <leader>u <cmd>bprevious<cr>
-
-" map c to open the current directory
-nnoremap <leader>c <cmd>edit %:h<cr>
-
-" map 'v' to change the working directory to the file directory
-nnoremap <leader>v mA<cmd>if isdirectory(bufname("%"))<cr>tcd %<cr>else<cr>tcd %:h<cr>endif<cr><cr>`A
-
 " map 'g' to insert a newline above / below the cursor
-nnoremap <leader>G             mAO<space><esc>d^x`A
-nnoremap <leader>g             mAo<space><esc>d^x`A
-inoremap <c-g> <space><bs><esc>mAo<space><esc>d^x`Aa
-
-" map 'i' to enter / leave conceal mode
-"noremap <leader>i <cmd>set conceallevel=2<cr><cmd>set concealcursor=ni<cr>
-"noremap <leader>I <cmd>set conceallevel=0<cr><cmd>set concealcursor&<cr>
-"inoremap <c-u>     <cmd>set conceallevel=2<cr><cmd>set concealcursor=ni<cr>
-"inoremap <c-y>     <cmd>set conceallevel=0<cr><cmd>set concealcursor&<cr>
+nnoremap <m-g> mAo<space><esc>d^x`A
+nnoremap <m-G> mAO<space><esc>d^x`A
+inoremap <m-g> <space><bs><esc>mAo<space><esc>d^x`Aa
+inoremap <m-G> <space><bs><esc>mAO<space><esc>d^x`Aa
 
 " change ' and ` to have opposite functions
 nnoremap ' `
 nnoremap ` '
 
-" remap 'q' to play the last macro, and leader+q to perform the 'q' functions
-nnoremap q @@
-nnoremap <leader>q q
-
-" change vim panes with <C-arrow keys>
-inoremap <c-left>   <esc><c-w>hi
-inoremap <c-right>  <esc><c-w>li
-inoremap <c-down>   <esc><c-w>ji
-inoremap <c-up>     <esc><c-w>ki
-
-" map <c-s> to swap letters
-inoremap <c-s> <esc>hxpa
-noremap <leader>s hxp
+" map <m-s> to swap letters
+nnoremap <leader>s hxp
 
 " map space to toggle fold
-noremap <space> za
+nnoremap <space> za
+xnoremap <space> za
 
-" map Alt+move to change tab
-nnoremap <M-h> gT
-nnoremap <M-l> gt
-vnoremap <M-h> gTv
-vnoremap <M-l> gtv
-inoremap <M-h> <esc>gTa
-inoremap <M-l> <esc>gta
+" map alt+move to change tab
+nnoremap <m-h> gT
+nnoremap <m-l> gt
+xnoremap <m-h> gTv
+xnoremap <m-l> gtv
+inoremap <m-h> <esc>gTa
+inoremap <m-l> <esc>gta
 
+" map alt+shift+move 
+nnoremap <m-H> <cmd>tabm -1<cr>
+nnoremap <m-L> <cmd>tabm +1<cr>
+xnoremap <m-H> <cmd>tabm -1<cr>
+xnoremap <m-L> <cmd>tabm +1<cr>
+inoremap <m-H> <cmd>tabm -1<cr>
+inoremap <m-L> <cmd>tabm +1<cr>
 
 " lsp bindings
-nnoremap <leader>x <cmd>lua vim.lsp.buf.hover()<cr>
-nnoremap <leader>d <cmd>lua vim.lsp.buf.references()<cr>
+"nnoremap <leader>x <cmd>lua vim.lsp.buf.hover()<cr> " use 'K'
+nnoremap <leader>lr <cmd>lua vim.lsp.buf.rename()<cr>
+nnoremap <leader>lx <cmd>lua vim.lsp.buf.references()<cr> " x for cross reference
+nnoremap <leader>li <cmd>lua vim.lsp.buf.implementation()<cr>
+nnoremap <leader>ld <cmd>lua vim.lsp.buf.definition()<cr>
 
+" map backspace in select mode to delete the currently selected word
 snoremap <bs> _<bs>
 
-" map ; to comment the current line
-autocmd FileType cpp,c,rust,javascript,java silent nnoremap <buffer> <leader>; mBI//<esc>`B
-autocmd FileType python,sh,bash             silent nnoremap <buffer> <leader>; mBI#<esc>`B
-autocmd FileType vim                        silent nnoremap <buffer> <leader>; mBI"<esc>`B
-autocmd FileType tex                        silent nnoremap <buffer> <leader>; mBI%<esc>`B
-autocmd FileType s,asm                      silent nnoremap <buffer> <leader>; mBI;<esc>`B
-autocmd FileType lua                        silent nnoremap <buffer> <leader>; mBI--<esc>`B
+" map 'v' to change the character under the cursor to upper case, and edit
+" behind it
+nnoremap <leader>v gewg~li
 
-" map , to uncomment the current line
-autocmd FileType cpp,c,rust,javascript,java silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\(\/\/\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
-autocmd FileType python,sh,bash             silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\(#\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
-autocmd FileType vim                        silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\("\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
-autocmd FileType tex                        silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\(%\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
-autocmd FileType s,asm                      silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\(;\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
-autocmd FileType lua                        silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\(--\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
-" - mA sets the mark 'A' (unlikely to be used because it is a capital letter) to
-" remember the cursor position
-" - <cmd>s does search/replace on the current line
-" - ^\(\s*\) searches for leading whitespace
-" - \(\/\/\)\? searches for 0 or 1 instances of //
-" - /\1 replaces the match with the first group (just the whitespace)
-" - <cr> enters the search/replace query
-" - <cmd>noh<cr> clears the highlighting from the search/replace
-" - <cmd>echo<cr> clears the command prompt
-" - `Aj replaces the cursor, then moves down a line
+" map 'u' to fancy LaTeX shenanigans
+nnoremap <leader>u mA0i_<esc>dt&kyt&jPv0r<space>`A
+nnoremap <leader>U mA0i_<esc>dt&jyt&kPv0r<space>`A
 
-command SpellUpdate    mkspell! /home/joe/.config/nvim/spell/en.utf-8.add
-command SpellEdit      silent exec "tabnew | edit /home/joe/.config/nvim/spell/en.utf-8.add | tcd %:h"
-command TagGenerate    silent !ctags .
-command MRun           Make! run
-command MMake          Make
-command DDispatch      Dispatch
-command DDispatchAsync Dispatch!
-command VViEdit        silent tabnew | silent edit $MYVIMRC | silent tcd %:h
-command GGrep          !grep --exclude-from=/home/joe/.grepignore --exclude-dir={build,.git} -rin <args>
-command Tanew          silent tabnew
-command Format         silent lua vim.lsp.buf.format()
+"" map ; to comment the current line, and . to uncomment the line
+"augroup CommentKeybinds
+"    autocmd!
+"    autocmd FileType cpp,c,rust,javascript,java silent nnoremap <buffer> <leader>; mBI//<esc>`B
+"    autocmd FileType python,sh,bash             silent nnoremap <buffer> <leader>; mBI#<esc>`B
+"    autocmd FileType vim                        silent nnoremap <buffer> <leader>; mBI"<esc>`B
+"    autocmd FileType tex                        silent nnoremap <buffer> <leader>; mBI%<esc>`B
+"    autocmd FileType s,asm                      silent nnoremap <buffer> <leader>; mBI;<esc>`B
+"    autocmd FileType lua                        silent nnoremap <buffer> <leader>; mBI--<esc>`B
+"    
+"    autocmd FileType cpp,c,rust,javascript,java silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\(\/\/\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
+"    autocmd FileType python,sh,bash             silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\(#\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
+"    autocmd FileType vim                        silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\("\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
+"    autocmd FileType tex                        silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\(%\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
+"    autocmd FileType s,asm                      silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\(;\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
+"    autocmd FileType lua                        silent nnoremap <buffer> <leader>. mB<cmd>s/^\(\s)\(--\)\?/\1<cr><cmd>noh<cr><cmd>echo<cr>`B
+"" - mA sets the mark 'A' (unlikely to be used because it is a capital letter) to
+"" remember the cursor position
+"" - <cmd>s does search/replace on the current line
+"" - ^\(\s*\) searches for leading whitespace
+"" - \(\/\/\)\? searches for 0 or 1 instances of //
+"" - /\1 replaces the match with the first group (just the whitespace)
+"" - <cr> enters the search/replace query
+"" - <cmd>noh<cr> clears the highlighting from the search/replace
+"" - <cmd>echo<cr> clears the command prompt
+"" - `Aj replaces the cursor, then moves down a line
+"augroup end
+
+function MultilineColon(count)
+    if a:count == 0
+        return ":"
+    else
+        return ":.,.+" .. a:count
+    endif
+endfunction
+
+nnoremap : <cmd>call feedkeys(MultilineColon(v:count), 'n')<cr>
+nnoremap J <cmd>exec "norm! " .. (v:count+1) .. "J"<cr>
+
+" map 'Make' commands
+nnoremap <leader>mr <cmd>Make run<cr>
+nnoremap <leader>me <cmd>Make! run<cr>
+nnoremap <leader>mm <cmd>Make<cr>
+nnoremap <leader>mn <cmd>Make!<cr>
+nnoremap <leader>mv <cmd>Make view<cr>
+nnoremap <leader>mc <cmd>Make! view<cr>
+nnoremap <leader>mf <cmd>Make test<cr>
+nnoremap <leader>md <cmd>Make! test<cr>
+
+" Ctrl+W + T moves pane into its own tab
+
+" map Alt+f to exit insert mode
+inoremap <m-f> <esc>
+
+" map Alt+d to insert a space in front of the cursor
+inoremap <m-d> <space><esc>i
+
+" map Alt+a to jump to the next space
+inoremap <m-a> <c-o>f<space>
+
+function RelativeEdit()
+    return ":.,.+" .. a:count
+endfunction
+
+nnoremap : <cmd>call feedkeys(MultilineColon(v:count), 'n')<cr>
+nnoremap <leader>n <cmd>call feedkeys(":e " .. expand("%:p:h") .. "/", 'n')<cr>

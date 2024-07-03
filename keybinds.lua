@@ -19,10 +19,19 @@ function advance_selection(forward)
     vim.b.highlighting = true
 end
 
-vim.keymap.set({"i", "s", "n", "v"}, "<c-l>", function()
+vim.keymap.set({"i", "s", "n", "v"}, "<m-n>", function()
     advance_selection(true)
 end, {silent = true})
 
-vim.keymap.set({"i", "s", "n", "v"}, "<c-y>", function()
+vim.keymap.set({"i", "s", "n", "v"}, "<m-p>", function()
     advance_selection(false)
 end, {silent = true})
+
+vim.api.nvim_create_user_command("BfClean", function(env) 
+    local bufs = vim.fn.getbufinfo({ buflisted = 1 })
+    for _, buf in ipairs(bufs) do
+        if buf.name == "" and buf.hidden == 1 then
+            vim.api.nvim_buf_delete(buf.bufnr, { force = false, unload = false })
+        end
+    end
+end, {desc = "Clears all empty and hidden buffers"})
