@@ -8,6 +8,7 @@ set ignorecase      " ignore case when tab-completing commands
 set spelllang=en_us " set spell check language to U.S. English
 set spell           " enable spell check
 set nohlsearch
+set nowrap
 "set noshowmode
 
 highlight Title guifg=#398abf

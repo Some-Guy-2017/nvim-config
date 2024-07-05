@@ -247,6 +247,33 @@ ls.add_snippets("java", {
         text_node(" = "),
         insert_node(0),
     }),
+
+    --[[
+        /*
+         * {1}
+         */{0}
+    --]]
+    snippet("block_comment", {
+        text_node({
+            "/*",
+            " * ",
+        }),
+        insert_node(1),
+        text_node({
+            "",
+            " */",
+        }),
+        insert_node(0),
+    }),
+
+    -- {1:Wrapper}<{2:Inner}>{0}
+    snippet("wrap", {
+        insert_node(1, "Wrapper"),
+        text_node("<"),
+        insert_node(2, "Inner"),
+        text_node(">"),
+        insert_node(0),
+    }),
 })
 ls.add_snippets("pseudocode" , {
     snippet("START", {

@@ -22,6 +22,7 @@ function s:format_buffers()
 endfunction
 command! SpellUpdate    mkspell! /home/joe/.config/nvim/spell/en.utf-8.add
 command! SpellEdit      silent call s:edit_file('/home/joe/.config/nvim/spell/en.utf-8.add')
+command! SpellClean     runtime spell/cleanadd.vim | tabprevious
 command! GenerateTags   silent !ctags .
 command! DDispatch      Dispatch
 command! DDispatchAsync Dispatch!
