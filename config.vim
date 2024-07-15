@@ -1,15 +1,21 @@
-set number          " line numbers
-set relativenumber  " shows the relative line count from cursor
-set shiftwidth=4    " about of whitespace to be added in normal mode (i.e. with < and > keys)
-set softtabstop=4   " the amount of whitespace to be added in insert mode (i.e. with Tab and Backspace keys)
-set tabstop=4       " width of the tab character
-set expandtab       " use spaces instead of tabs
-set ignorecase      " ignore case when tab-completing commands
-set spelllang=en_us " set spell check language to U.S. English
-set spell           " enable spell check
-set nohlsearch
-set nowrap
-"set noshowmode
+set number            " line numbers
+set relativenumber    " shows the relative line count from cursor
+set expandtab         " use spaces instead of tabs
+set ignorecase        " ignore case when tab-completing commands
+set spelllang=en_us   " set spell check language to U.S. English
+set spell             " enable spell check
+set nohlsearch        " do not highlight searches
+set nowrap            " do not wrap (extend text past the screen)
+set virtualedit=block " in visual block mode, allow editing areas without text
+
+" set softtabstop, shiftwidth, and tabstop all to the same value
+set softtabstop=4 " the amount of whitespace to be added in insert mode (i.e. with Tab and Backspace keys)
+
+" about of whitespace to be added in normal mode (i.e. with < and > keys)
+exec "set shiftwidth=" .. &softtabstop
+
+" about of whitespace to be added in normal mode (i.e. with < and > keys)
+exec "set tabstop=" .. &softtabstop 
 
 highlight Title guifg=#398abf
 highlight Function guifg=#469484
@@ -100,6 +106,7 @@ function s:highlight_pseudocode()
     call s:match_add("Operator", s:operator("FOR", "in"))
     call s:match_add("Operator", s:operator("IF", "(is|equals|does not equal|\\<|\\>)"))
     call s:match_add("Operator", s:operator("MULTIPLY", "by"))
+    call s:match_add("Operator", s:operator("POP", "from"))
     call s:match_add("Operator", s:operator("CONVERT", "into"))
     call s:match_add("Operator", s:token_behind(s:any_token) . "at")
     

@@ -115,11 +115,6 @@ ls.add_snippets("java", {
         text_node("GridBagLayout"),
         insert_node(0),
     }),
-    snippet("background_test", {
-        insert_node(1, "object"),
-        text_node(".setBackground(Color.red);"),
-        insert_node(0),
-    }),
     snippet("arraylist", {
         text_node("ArrayList<"),
         insert_node(1, "type"),
@@ -272,6 +267,53 @@ ls.add_snippets("java", {
         text_node("<"),
         insert_node(2, "Inner"),
         text_node(">"),
+        insert_node(0),
+    }),
+
+    -- {1:var} == null{0}
+    snippet("is_null", {
+        insert_node(1, "var"),
+        text_node(" == null"),
+        insert_node(0),
+    }),
+
+    --[[
+    --  if ({1}) {
+    --      throw new NullPointerException("{2}");
+    --  }{0}
+    --]]
+    snippet("check_null", {
+        text_node("if ("),
+        insert_node(1),
+        text_node({
+            ") {",
+            "    throw new NullPointerException(\"",
+        }),
+        insert_node(2),
+        text_node({
+            "\");",
+            "}"
+        }),
+        insert_node(0),
+    }),
+
+    --[[
+    --  System.out.println("Expecting {1:exception}");
+    --  try { {2} }
+    --  catch (Exception e) { e.printStackTrace(); }
+    --]]
+    snippet("wrap_try", {
+        text_node("System.out.println(\"Expecting "),
+        insert_node(1, "Exception"),
+        text_node({
+            "\");",
+            "try { ",
+        }),
+        insert_node(2),
+        text_node({
+            " }",
+            "catch (Exception e) { e.printStackTrace(); }",
+        }),
         insert_node(0),
     }),
 })
