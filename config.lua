@@ -3,8 +3,8 @@ require("nvim-autopairs").setup {}
 -- icon-picker config
 require("icon-picker").setup {disable_legacy_commands = true}
 local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "<Leader>e", "<cmd>IconPickerNormal<cr>", opts)
-vim.keymap.set("i", "<C-e>", "<cmd>IconPickerInsert<cr>", opts)
+vim.keymap.set("n", "<leader>ue", "<cmd>IconPickerNormal<cr>", opts)
+vim.keymap.set("i", "<c-e>", "<cmd>IconPickerInsert<cr>", opts)
 
 -- LSP config
 if vim.g.lsp_setup == nil then
@@ -27,6 +27,7 @@ require('lspconfig').jdtls.setup {
 }
 
 require('lspconfig').texlab.setup { capabilities = capabilities }
+require('lspconfig').ccls.setup { capabilities = capabilities }
 
 require('lspconfig').lua_ls.setup {
     capabilities = capabilities,
@@ -56,6 +57,8 @@ require('lspconfig').lua_ls.setup {
         Lua = {}
     }
 }
+
+
 
 end
 

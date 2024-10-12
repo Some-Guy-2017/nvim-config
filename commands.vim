@@ -26,5 +26,4 @@ command! JJava          !java %
 command! TTexmfEdit     silent call s:edit_dir('/home/joe/texmf/')
 "command! SpellHelp      for item in ['Bad','Cap','Local','Rare']| exe "hi Spell".item| endfor
 command! VTexErrors     VimtexErrors
-command! OpenDir        edit %:p:h
 command! CWDHere        tcd %:p:h

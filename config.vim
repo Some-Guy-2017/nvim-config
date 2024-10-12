@@ -5,8 +5,9 @@ set ignorecase        " ignore case when tab-completing commands
 set spelllang=en_us   " set spell check language to U.S. English
 set spell             " enable spell check
 set nohlsearch        " do not highlight searches
-set nowrap            " do not wrap (extend text past the screen)
+set wrap
 set virtualedit=block " in visual block mode, allow editing areas without text
+"set keymap=dvorak
 
 " set softtabstop, shiftwidth, and tabstop all to the same value
 set softtabstop=4 " the amount of whitespace to be added in insert mode (i.e. with Tab and Backspace keys)
@@ -138,3 +139,5 @@ augroup Pseudocode
     autocmd BufLeave *.pscd silent set filetype&
     autocmd Filetype pseudocode call s:delete_matches() | call s:highlight_pseudocode()
 augroup end
+
+let g:netrw_bufsettings = 'nomodifiable nomodified number relativenumber nobuflisted wrap readonly'

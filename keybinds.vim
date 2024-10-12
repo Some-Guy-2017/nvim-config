@@ -12,7 +12,8 @@ call s:map_keybind('n', '<leader>,', ',')
 call s:map_keybind('x', '<leader>,', ',')
 
 " map Alt+t to open new tab
-call s:map_keybind('n', '<m-t>', '<cmd>tabnew<cr><cmd>Telescope find_files<cr>')
+"call s:map_keybind('n', '<m-t>', '<cmd>tabnew<cr><cmd>Telescope find_files<cr>')
+call s:map_keybind('n', '<m-t>', '<cmd>tabnew<cr>')
 
 " map 'y' to yank to system clipboard
 call s:map_keybind('n', '<leader>y', '"+y')
@@ -57,12 +58,14 @@ function MoveScreen(distance)
     endif
 endfunction
 
-call s:map_keybind('n', '<leader>zk', 'zt10<c-y>')
-call s:map_keybind('n', '<leader>zj', 'zb10<c-e>')
-call s:map_keybind('x', '<leader>zk', 'zt10<c-y>')
-call s:map_keybind('x', '<leader>zj', 'zb10<c-e>')
-call s:map_keybind('n', '<leader>zl', 'ze<cmd>call MoveScreen(10)<cr>')
-call s:map_keybind('n', '<leader>zh', 'zs10zh')
+let height_change = winheight(0) / 3
+let width_change = winwidth(0) / 3
+call s:map_keybind('n', '<leader>zk', 'zt' .. height_change .. '<c-y>')
+call s:map_keybind('n', '<leader>zj', 'zb' .. height_change .. '<c-e>')
+call s:map_keybind('x', '<leader>zk', 'zt' .. height_change .. '<c-y>')
+call s:map_keybind('x', '<leader>zj', 'zb' .. height_change .. '<c-e>')
+call s:map_keybind('n', '<leader>zl', 'ze<cmd>call MoveScreen(' .. width_change .. '30)<cr>')
+call s:map_keybind('n', '<leader>zh', 'zs' .. width_change .. 'zh')
 call s:map_keybind('n', '<leader>zz', 'zszH')
 
 function StoreCursorPos()
@@ -85,9 +88,6 @@ call s:map_keybind('x', '<m-b>', '<cmd>call StoreCursorPos()<cr>2zH<cmd>call Mov
 
 call s:map_keybind('n', '<leader>a', 'i <esc><cmd>call feedkeys("r", "n")<cr>')
 
-" temporary keybind to unlearn m-f
-call s:map_keybind('i', '<m-f>', '<esc>a')
-
 " remap finding the next character to also center cursor
 call s:map_keybind('n', 'n', 'nzz')
 call s:map_keybind('n', 'N', 'Nzz')
@@ -103,11 +103,11 @@ call s:map_keybind('n', '<leader>tt', '<cmd>Telescope tags<cr>')
 call s:map_keybind('n', '<leader>tf', '<cmd>Telescope find_files<cr>')
 call s:map_keybind('n', '<leader>th', '<cmd>Telescope highlights<cr>')
 
-" map 'g' to insert a newline above / below the cursor
-call s:map_keybind('n', '<m-g>', 'mAo<space><esc>d^x`A')
-call s:map_keybind('n', '<m-G>', 'mAO<space><esc>d^x`A')
-call s:map_keybind('i', '<m-g>', '<space><bs><esc>mAo<space><esc>d^x`Aa')
-call s:map_keybind('i', '<m-G>', '<space><bs><esc>mAO<space><esc>d^x`Aa')
+" map 'i' to insert a newline above / below the cursor
+call s:map_keybind('n', '<m-i>', 'mAo<space><esc>d^x`A')
+call s:map_keybind('n', '<m-I>', 'mAO<space><esc>d^x`A')
+call s:map_keybind('i', '<m-i>', '<space><bs><esc>mAo<space><esc>d^x`Aa')
+call s:map_keybind('i', '<m-I>', '<space><bs><esc>mAO<space><esc>d^x`Aa')
 
 " change ' and ` to have opposite functions
 call s:map_keybind('n', "'", "`")
@@ -145,29 +145,29 @@ call s:map_keybind('n', '<leader>ld', '<cmd>lua vim.lsp.buf.definition()<cr>')
 " map backspace in select mode to delete the currently selected word
 call s:map_keybind('s', '<bs>', '_<bs>')
 
-" map 'jf' to change the character under the cursor to upper case, and edit
+" map 'uh' to change the character under the cursor to upper case, and edit
 " behind it
-call s:map_keybind('n', '<leader>jf', 'gewg~li')
+call s:map_keybind('n', '<leader>uh', 'gewg~li')
 
-" map 'jr' to source vimrc
-call s:map_keybind('n', '<leader>jr', '<cmd>source $MYVIMRC<cr>')
+" map 'ur' to source vimrc
+call s:map_keybind('n', '<leader>ur', '<cmd>source $MYVIMRC<cr>')
 
 function RelativeEdit()
     return ":.,.+" .. a:count
 endfunction
 
-" map 'je' to edit some local file
-call s:map_keybind('n', '<leader>je', '<cmd>call feedkeys(":e " .. expand("%:p:h") .. "/", "n")<cr>')
+" map 'ue' to edit some local file
+call s:map_keybind('n', '<leader>ue', '<cmd>call feedkeys(":e " .. expand("%:p:h") .. "/", "n")<cr>')
 
-" map 'ja' to insert curly braces around an if statement
-call s:map_keybind('n', '<leader>ja', 'mAg_a {<esc>jo}<esc>`A')
+" map 'ud' to insert curly braces around an if statement
+call s:map_keybind('n', '<leader>ud', 'mAg_a {<esc>jo}<esc>`A')
 
 " map 'jq' to jump to the end of the curly braces
-call s:map_keybind('n', '<leader>jq', '$%zz')
+"call s:map_keybind('n', '<leader>jq', '$%zz')
 
-" map 'u' to fancy LaTeX shenanigans
-call s:map_keybind('n', '<leader>u', 'mA0i_<esc>dt&kyt&jPv0r<space>`A')
-call s:map_keybind('n', '<leader>U', 'mA0i_<esc>dt&jyt&kPv0r<space>`A')
+" map 'ut' to fancy LaTeX shenanigans
+call s:map_keybind('n', '<leader>ut', 'mA0i_<esc>dt&kyt&jPv0r<space>`A')
+call s:map_keybind('n', '<leader>uT', 'mA0i_<esc>dt&jyt&kPv0r<space>`A')
 "" map ; to comment the current line, and . to uncomment the line
 "augroup CommentKeybinds
 "    autocmd!
@@ -209,24 +209,19 @@ nnoremap J <cmd>exec "norm! " .. (v:count+1) .. "J"<cr>
 
 " map 'Make' commands
 call s:map_keybind('n', '<leader>mr', '<cmd>Make run<cr>')
-call s:map_keybind('n', '<leader>me', '<cmd>Make! run<cr>')
+call s:map_keybind('n', '<leader>mc', '<cmd>Make! run<cr>')
 call s:map_keybind('n', '<leader>mm', '<cmd>Make<cr>')
-call s:map_keybind('n', '<leader>mn', '<cmd>Make!<cr>')
+call s:map_keybind('n', '<leader>mb', '<cmd>Make!<cr>')
 call s:map_keybind('n', '<leader>mv', '<cmd>Make view<cr>')
-call s:map_keybind('n', '<leader>mc', '<cmd>Make! view<cr>')
-call s:map_keybind('n', '<leader>mf', '<cmd>Make test<cr>')
+call s:map_keybind('n', '<leader>mw', '<cmd>Make! view<cr>')
+call s:map_keybind('n', '<leader>mz', '<cmd>let old_session = get(g:, "tmux_session", "")<cr><cmd>let g:tmux_session = "detached"<cr><cmd>Make! view<cr><cmd>let g:tmux_session = old_session<cr>')
+call s:map_keybind('n', '<leader>mt', '<cmd>Make test<cr>')
 call s:map_keybind('n', '<leader>md', '<cmd>Make! test<cr>')
-call s:map_keybind('n', '<leader>mx', '<cmd>Make clean<cr>')
-call s:map_keybind('n', '<leader>mz', '<cmd>Make! clean<cr>')
+call s:map_keybind('n', '<leader>mg', '<cmd>Make clean<cr>')
+call s:map_keybind('n', '<leader>mf', '<cmd>Make! clean<cr>')
 
-" Ctrl+W + T moves pane into its own tab
-
-" map Alt+e to exit insert mode
-call s:map_keybind('i', '<m-e>', '<esc>')
-call s:map_keybind('x', '<m-e>', '<esc>')
-
-" map Alt+d to insert a space in front of the cursor
-call s:map_keybind('i', '<m-d>', '<space><esc>i')
+" map Alt+. to insert a space in front of the cursor
+call s:map_keybind('i', '<m-.>', '<space><esc>i')
 
 " map Alt+a to jump to the next space
 call s:map_keybind('i', '<m-a>', '<c-o>f<space>')
@@ -237,3 +232,10 @@ call s:map_keybind('n', 'r<m-p>', '"_xP')
 " map Shift + horizontal movement to shift the screen
 call s:map_keybind('n', 'L', 'zl')
 call s:map_keybind('n', 'H', 'zh')
+
+call s:map_keybind('n', 'cm', 'cw')
+
+nnoremap j gj
+nnoremap k gk
+xnoremap j gj
+xnoremap k gk
